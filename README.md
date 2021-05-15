@@ -1,11 +1,10 @@
-
-
 # bot
 ## crediting
 you must credit me or i'll be sad ~~also i'll get your bot taken down if i find it~~
 
 ## installation
 **requires an openai beta key**
+
 **requires a stripe account if you want users to purchase tokens**
 
     git clone https://github.com/RoseChilds/gpt3-discord.git
