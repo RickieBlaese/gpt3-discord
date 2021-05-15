@@ -1,0 +1,16 @@
+{
+  "name": "gpt3-discord",
+  "version": "1.0.0",
+  "description": "a chat bot for discord that uses gpt3",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "author": "rosechilds",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^12.5.3",
+    "openai-api": "^1.1.2",
+    "sqlite3": "^5.0.2"
+  }
+}

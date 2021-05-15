@@ -1,0 +1,9 @@
+{
+  "openai": {
+    "token": ""
+  },
+  "bot": {
+    "token": "",
+    "prefix": ""
+  }
+}
