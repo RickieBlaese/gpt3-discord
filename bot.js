@@ -11,6 +11,7 @@ const errors = {};
 client.lib = require('./ext/lib');
 client.database = require('./ext/database');
 client.Discord = Discord;
+client.config = config;
 
 // EXTENTIONS
 require("./ext/inline");
@@ -75,7 +76,7 @@ client.on('message', message => {
   if (timestamps.has(message.author.id)) {
     const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
   	if (now < expirationTime) {
-  		const timeLeft = (expirationTime - now) / 1000;
+  		const timeLeft = (expirationTime - now);
       return errors.cooldown.execute(client, message, timeLeft);
   	}
   }

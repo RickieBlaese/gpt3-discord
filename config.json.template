@@ -5,5 +5,18 @@
   "bot": {
     "token": "",
     "prefix": ""
+  },
+  "dailytokens": 0,
+  "tokenprice": 0,
+  "minpurchase": 0,
+  "stripe": {
+    "live": {
+      "secretkey": "",
+      "publickey": ""
+    },
+    "test": {
+      "secretkey": "",
+      "publickey": ""
+    }
   }
 }

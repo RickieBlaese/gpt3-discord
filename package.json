@@ -10,7 +10,9 @@
   "license": "ISC",
   "dependencies": {
     "discord.js": "^12.5.3",
+    "natural": "^5.0.3",
     "openai-api": "^1.1.2",
-    "sqlite3": "^5.0.2"
+    "sqlite3": "^5.0.2",
+    "stripe": "^8.148.0"
   }
 }
