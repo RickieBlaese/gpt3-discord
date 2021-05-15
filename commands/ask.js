@@ -21,6 +21,8 @@ module.exports = {
         case 2:
           message.inlineReply("Uh oh that message contains a blacklisted word (warning)");
           break;
+        case 3:
+          message.inlineReply(`That message uses too many tokens (${client.lib.thousands(error.has)}). The max is 150 tokens.`)
         default:
           throw new Error(error);
       }

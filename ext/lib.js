@@ -25,6 +25,9 @@ module.exports = {
           if(tokenlength>remainingtokens){
             return reject({code:0, needed:tokenlength, has:remainingtokens});
           }
+          if(tokenlength>150){
+            return reject({code:3, has:tokenlength});
+          }
           if(isBadInput(message.cleanContent.substring(6))){
             return reject({code:2});
           }
@@ -39,7 +42,7 @@ module.exports = {
               frequencyPenalty: 0.3,
               bestOf: 1,
               stream: false,
-              stop: [`A:`, '\n', ':'],
+              stop: [`You:`, '\n', ':'],
               file: config.openai.botfile
             }).then(response=>{
               resolve(response.data.choices[0].text);
