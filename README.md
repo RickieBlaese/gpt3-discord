@@ -1,3 +1,4 @@
+
 # bot
 ## crediting
 you must credit me or i'll be sad ~~also i'll get your bot taken down if i find it~~
@@ -6,6 +7,8 @@ you must credit me or i'll be sad ~~also i'll get your bot taken down if i find 
 **requires an openai beta key**
 
 **requires a stripe account if you want users to purchase tokens**
+
+    curl https://api.openai.com/v1/files -H "Authorization: Bearer ${OPENAI-KEY}" -F purpose="answers" -F file="@botdata.json1"
 
     git clone https://github.com/RoseChilds/gpt3-discord.git
     cd gpt3-discord

@@ -3,32 +3,32 @@ const OpenAI = require("openai-api");
 const config = require("../config.json");
 const openai = new OpenAI(config.openai.token);
 var natural = require('natural');
-var tokenizer = new natural.WordTokenizer()
+var tokenizer = new natural.WordTokenizer();
+var wordfilter = require('wordfilter');
+wordfilter.clearList();
+wordfilter.addWords(require("../bad.json").list);
+
+isBadInput = wordfilter.blacklisted;
 
 module.exports = {
   getAnswer(message){
     return new Promise((resolve, reject)=>{
-      console.log("getting tokens");
       database.getTokens(message.author.id).then(remainingtokens=>{
-        console.log(remainingtokens);
         database.getMessages(message.author.id).then(messages=>{
-          var toask = `A is asking G something.\n\n`;
+          var toask = `You and honbot are having a conversation on Discord.\n\n`;
           messages.reverse();
           for(const message of messages){
-            toask = toask + `A: ${message.question}\nG:${message.answer}\n`
+            toask = toask + `You: ${message.question}\nhonbot:${message.answer}\n`
           }
-          toask = toask + `A: ${message.cleanContent.substring(6)}\nG:`
-          console.log("getting length");
-          console.log(toask);
+          toask = toask + `You: ${message.cleanContent.substring(6)}\nhonbot:`
           tokenlength = tokenizer.tokenize(toask).length;
-          console.log(tokenlength);
           if(tokenlength>remainingtokens){
             return reject({code:0, needed:tokenlength, has:remainingtokens});
           }
-          console.log("taking tokens");
+          if(isBadInput(message.cleanContent.substring(6))){
+            return reject({code:2});
+          }
           database.takeTokens(message.author.id, tokenlength).then(newuser=>{
-            console.log(newuser);
-            console.log("getting answer");
             openai.complete({
               engine: 'ada',
               prompt: toask,
@@ -39,7 +39,8 @@ module.exports = {
               frequencyPenalty: 0.3,
               bestOf: 1,
               stream: false,
-              stop: [`A:`, '\n', ':']
+              stop: [`A:`, '\n', ':'],
+              file: config.openai.botfile
             }).then(response=>{
               resolve(response.data.choices[0].text);
               database.addMessage(message.cleanContent.substring(6), response.data.choices[0].text, message.author.id);
@@ -69,5 +70,12 @@ module.exports = {
     var mDisplay = m > 0 ? m + (m == 1 ? " minute, " : " minutes, ") : "";
     var sDisplay = s > 0 ? s + (s == 1 ? " second" : " seconds") : "";
     return before + dDisplay + hDisplay + mDisplay + sDisplay;
-  }
+  },
+  getUserFromMention(mention, client) {
+    const matches = mention.match(/^<@!?(\d+)>$/);
+    if (!matches) return;
+    const id = matches[1];
+    return client.users.cache.get(id);
+  },
+  isBadInput: isBadInput
 };

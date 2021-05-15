@@ -13,6 +13,7 @@
     "natural": "^5.0.3",
     "openai-api": "^1.1.2",
     "sqlite3": "^5.0.2",
-    "stripe": "^8.148.0"
+    "stripe": "^8.148.0",
+    "wordfilter": "^0.2.6"
   }
 }

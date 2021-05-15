@@ -8,7 +8,7 @@ module.exports = {
       return message.inlineReply("Please provide an amount of tokens to buy.");
     }
     try{
-      var amount = parseInt(args[0]);
+      var amount = Math.floor(parseInt(args[0]));
     }catch{
       return message.inlineReply("Please provide a number");
     }

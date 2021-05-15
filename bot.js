@@ -29,7 +29,7 @@ errors.cooldown = require(`./errors/cooldown.js`);
 
 // EVENTS
 client.once('ready', () => {
-	client.user.setActivity(`on Rose's PC`);
+	client.user.setActivity(`${config.bot.prefix}help`);
 });
 
 client.on('message', message => {
@@ -67,26 +67,36 @@ client.on('message', message => {
   }
   if (!client.commands.has(command)) return;
   const commandObj = client.commands.get(command);
-  if (!cooldowns.has(commandObj.name)) {
-  	cooldowns.set(commandObj.name, new Discord.Collection());
-  }
-  const now = Date.now();
-  const timestamps = cooldowns.get(commandObj.name);
-  const cooldownAmount = (commandObj.cooldown || 0) * 1000;
-  if (timestamps.has(message.author.id)) {
-    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
-  	if (now < expirationTime) {
-  		const timeLeft = (expirationTime - now);
-      return errors.cooldown.execute(client, message, timeLeft);
-  	}
-  }
-  timestamps.set(message.author.id, now);
-  setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
-  try {
-  	commandObj.execute(client, message, args);
-  } catch (error) {
-    errors.default.execute(client, message, error);
-  }
+	client.database.getUser(message.author.id).then(user=>{
+		if(commandObj.perms){
+			if(commandObj.perms>user.perms){
+				return;
+			}
+		}
+		if(user.banned==1){
+			return;
+		}
+		if (!cooldowns.has(commandObj.name)) {
+	  	cooldowns.set(commandObj.name, new Discord.Collection());
+	  }
+	  const now = Date.now();
+	  const timestamps = cooldowns.get(commandObj.name);
+	  const cooldownAmount = (commandObj.cooldown || 0) * 1000;
+	  if (timestamps.has(message.author.id)) {
+	    const expirationTime = timestamps.get(message.author.id) + cooldownAmount;
+	  	if (now < expirationTime) {
+	  		const timeLeft = (expirationTime - now);
+	      return errors.cooldown.execute(client, message, timeLeft);
+	  	}
+	  }
+	  timestamps.set(message.author.id, now);
+	  setTimeout(() => timestamps.delete(message.author.id), cooldownAmount);
+	  try {
+	  	commandObj.execute(client, message, args);
+	  } catch (error) {
+	    errors.default.execute(client, message, error);
+	  }
+	});
 });
 
 // LOGIN

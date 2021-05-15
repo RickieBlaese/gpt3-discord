@@ -18,6 +18,9 @@ module.exports = {
         case 0:
           message.inlineReply(`You don't have enough tokens to ask that! You have ${client.lib.thousands(error.has)} tokens, but you need ${client.lib.thousands(error.needed)}. The OpenAI API costs us money to use, so we limit how much users can use the bot.\nYour tokens reset every 24 hours. Run \`${client.config.bot.prefix}tokens\` to find out when your tokens reset.`);
           break;
+        case 2:
+          message.inlineReply("Uh oh that message contains a blacklisted word (warning)");
+          break;
         default:
           throw new Error(error);
       }

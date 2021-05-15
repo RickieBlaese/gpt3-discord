@@ -1,6 +1,7 @@
 {
   "openai": {
-    "token": ""
+    "token": "",
+    "botfile": ""
   },
   "bot": {
     "token": "",
