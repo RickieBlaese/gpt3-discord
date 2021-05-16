@@ -1,7 +1,8 @@
 {
   "openai": {
     "token": "",
-    "botfile": ""
+    "botfile": "",
+    "maxanswer": 0
   },
   "bot": {
     "token": "",

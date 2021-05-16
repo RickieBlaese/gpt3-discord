@@ -35,7 +35,7 @@ module.exports = {
             openai.complete({
               engine: 'ada',
               prompt: toask,
-              maxTokens: 25,
+              maxTokens: config.openai.maxanswer,
               temperature: 1,
               topP: 1,
               presencePenalty: 0,
