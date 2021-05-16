@@ -5,7 +5,6 @@ module.exports = {
 	execute(client, message, args) {
 		const Discord = client.Discord;
     message.channel.startTyping();
-    console.log(message.cleanContent.substring(4));
     client.lib.getAnswer(message).then(data=>{
       if(data==""){
         data = "`[EMPTY MESSAGE]`"
