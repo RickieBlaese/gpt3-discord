@@ -15,12 +15,12 @@ module.exports = {
     return new Promise((resolve, reject)=>{
       database.getTokens(message.author.id).then(remainingtokens=>{
         database.getMessages(message.author.id).then(messages=>{
-          var toask = `You and honeybot are having a conversation on Discord.\n\n`;
+          var toask = `You and bot are having a conversation on Discord.\n\n`;
           messages.reverse();
           for(const message of messages){
-            toask = toask + `You: ${message.question}\nhoneybot:${message.answer}\n`
+            toask = toask + `You: ${message.question}\nbot:${message.answer}\n`
           }
-          toask = toask + `You: ${message.cleanContent.substring(6)}\nhoneybot:`
+          toask = toask + `You: ${message.cleanContent.substring(6)}\nbot:`
           tokenlength = tokenizer.tokenize(toask).length;
           if(tokenlength>remainingtokens){
             return reject({code:0, needed:tokenlength, has:remainingtokens});
