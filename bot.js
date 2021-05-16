@@ -37,34 +37,6 @@ client.on('message', message => {
 
 	const args = message.content.slice(prefix.length).trim().split(/ +/);
 	const command = args.shift().toLowerCase();
-  if (command=="reload"){
-		client.database.isAdmin(message.author.id).then(isadmin=>{
-			if(isadmin){
-				message.channel.send("Reloading commands and external files...")
-				.then((msg) => {
-					client.shard.broadcastEval(`function requireUncached(module) {
-						delete require.cache[require.resolve(module)];
-						return require(module);
-					}
-					const Discord = require('discord.js');
-					this.commands = new Discord.Collection();
-					this.Discord = Discord;
-					this.errors = {};
-					this.errors.default = require('./../../../../errors/default.js');
-					this.errors.cooldown = require('./../../../../errors/cooldown.js');
-					const commandFiles = require('fs').readdirSync('./commands').filter(file => file.endsWith('.js'));
-					for (const file of commandFiles) {
-						const commandreq = requireUncached(\`./../../../../commands/\${file}\`);
-						this.commands.set(\`\${commandreq.name}\`, commandreq);
-					}
-					this.lib = requireUncached('./../../../../ext/lib');
-					this.database = requireUncached('./../../../../ext/database');`);
-					msg.edit("Commands and external files reloaded!");
-				});
-			}
-		}).catch(console.log);
-    return
-  }
   if (!client.commands.has(command)) return;
   const commandObj = client.commands.get(command);
 	client.database.getUser(message.author.id).then(user=>{

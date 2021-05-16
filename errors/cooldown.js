@@ -5,6 +5,11 @@ module.exports = {
       .setTitle("Woah there, slow it down")
       .setDescription(`You can use that command again ${client.lib.parsetime(timeleft, "in ")}`)
       .setColor(`#ED4245`);
-    message.inlineReply(cooldownembed);
+    message.inlineReply(cooldownembed)
+			.then(msg=>{
+				setTimeout(function(){
+					msg.delete().then().catch()
+				}, 5000)
+			});
   }
 };
