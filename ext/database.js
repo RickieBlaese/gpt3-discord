@@ -148,14 +148,18 @@ function addTokens(userid, tokens) {
 	});
 }
 
-function getMessages(userid, limit = 2, time = 6000){
+function getMessages(userid, limit = 2, time = 120000){
 	return new Promise((resolve, reject) =>{
 		db.serialize(function(){
-			db.all("SELECT * FROM messages WHERE userid = $1 AND time < $2 ORDER BY id desc LIMIT $3", [userid, new Date().getTime() - time, limit], function(err, data){
+			db.all("SELECT * FROM messages WHERE userid = $1 AND time > $2 ORDER BY id desc LIMIT $3", [userid, new Date().getTime() - time, limit], function(err, data){
 				if(err){
 					return reject(err);
 				}
 				resolve(data);
+				// delete unneeded messages
+				db.run("DELETE FROM messages WHERE time < $1 AND userid = $2", [new Date().getTime() - time, userid], function(){
+
+				});
 			})
 		});
 	});
