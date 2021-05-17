@@ -12,7 +12,7 @@ module.exports = {
   				// TODO: add more details
   				var cooldown="no cooldown"
   				if(command.cooldown>=1){
-  					cooldown=client.lib.secondsToDhms(command.cooldown, true)
+  					cooldown=client.lib.parsetime(command.cooldown, true)
   				}
   				message.channel.send(`\`${client.config.bot.prefix}${command.name}\`: ${command.description}\nCooldown: ${cooldown}`)
   				return;
