@@ -29,7 +29,10 @@ errors.cooldown = require(`./errors/cooldown.js`);
 
 // EVENTS
 client.once('ready', () => {
-	client.user.setActivity(`${config.bot.prefix}help`);
+	client.user.setActivity(`${config.bot.prefix}help | ${config.bot.prefix}info`);
+	client.fetchApplication().then((info)=>{
+		client.application = info;
+	});
 });
 
 client.on('message', message => {
