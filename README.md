@@ -8,10 +8,9 @@ you must credit me or i'll be sad ~~also i'll get your bot taken down if i find 
 
 **requires a stripe account if you want users to purchase tokens**
 
-    curl https://api.openai.com/v1/files -H "Authorization: Bearer ${OPENAI-KEY}" -F purpose="answers" -F file="@botdata.json1"
-
     git clone https://github.com/RoseChilds/gpt3-discord.git
     cd gpt3-discord
+    curl https://api.openai.com/v1/files -H "Authorization: Bearer ${OPENAI-KEY}" -F purpose="answers" -F file="@botdata.json1"
     npm i
 create a file called `config.json`, copy over the contents of `config.json.template` and fill out all the sections.
 ## running
