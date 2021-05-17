@@ -9,7 +9,7 @@ module.exports = {
       .addFields(
     		{ name: 'Latency', value: `${Date.now() - message.createdTimestamp}ms` },
     		{ name: 'API Latency', value: `${Math.round(client.ws.ping)}ms` }
-    	).setColor("RANDOM");
+    	).setColor(`#${client.config.brandcolour}`);
 		message.inlineReply(pingembed);
 	},
 };

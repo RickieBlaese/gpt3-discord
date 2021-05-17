@@ -13,7 +13,7 @@ module.exports = {
       .addFields(
     		{ name: 'What am I?', value: `I'm ${client.user.username}! I use OpenAI's GPT-3 to power my responses, the most powerful text processing AI __in the world__.\nWanna saying something to me? Run \`${client.config.bot.prefix}ask <message>\`!` },
     		{ name: 'Disclaimer', value: `All messages I generate are the responsibility of **the user that generated the message**, and aren't associated with OpenAI in any way.` }
-    	).setColor("RANDOM").setFooter(`By rosee#0001 | Ran and operated by ${owner.username}#${owner.discriminator}`);
+    	).setColor(`#${client.config.brandcolour}`).setFooter(`By rosee#0001 | Ran and operated by ${owner.username}#${owner.discriminator}`);
 		message.inlineReply(infoembed);
 	},
 };
