@@ -11,6 +11,7 @@
   "dailytokens": 0,
   "tokenprice": 0,
   "minpurchase": 0,
+  "brandcolour": "fff",
   "stripe": {
     "live": {
       "secretkey": "",
