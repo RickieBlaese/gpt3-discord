@@ -6,10 +6,12 @@ module.exports = {
 		const Discord = client.Discord;
     message.channel.startTyping();
     client.lib.getAnswer(message).then(data=>{
-      if(data=="" || !data){
+      if(data.replace(" ", "")=="" || !data){
         data = "`[EMPTY MESSAGE]`"
       }
-      message.inlineReply(data);
+      message.inlineReply(data).catch(err=>{
+        message.inlineReply("`[EMPTY MESSAGE]`");
+      });
       message.channel.stopTyping();
     }).catch(error=>{
       message.channel.stopTyping();
