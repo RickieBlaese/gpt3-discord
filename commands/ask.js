@@ -6,7 +6,7 @@ module.exports = {
 		const Discord = client.Discord;
     message.channel.startTyping();
     client.lib.getAnswer(message).then(data=>{
-      if(data==""){
+      if(data=="" || !data){
         data = "`[EMPTY MESSAGE]`"
       }
       message.inlineReply(data);
