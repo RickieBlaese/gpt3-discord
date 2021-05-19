@@ -96,7 +96,9 @@ module.exports = {
                     outputlength = tokenizer.tokenize(response.data.choices[0].text).length;
                     const prices = {
                       davinci: 0.06/1000,
+                      "davinci-instruct-beta": 0.06/1000,
                       curie: 0.0060/1000,
+                      "curie-instruct-beta": 0.0060/1000,
                       babbage: 0.0012/1000,
                       ada: 0.0008/1000
                     }
