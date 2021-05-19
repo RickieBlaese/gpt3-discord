@@ -3,7 +3,8 @@
     "token": "",
     "botfile": "",
     "maxanswer": 0,
-    "model": "curie"
+    "model": "curie",
+    "nicknamemodel": "curie-instruct-beta"
   },
   "bot": {
     "token": "",

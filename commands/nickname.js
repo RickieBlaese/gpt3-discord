@@ -36,7 +36,7 @@ module.exports = {
               client.database.takeTokens(message.author.id, 150).then(user=>{
                 responsemessage.inlineReply("Generating your nickname..");
                 openai.complete({
-                  engine: 'curie-instruct-beta',
+                  engine: client.config.openai.nicknamemodel,
                   prompt: `Generate a nickname for ${message.author.username}. The nickname should be short, funny and make people laugh.\nGenerated nickname:`,
                   maxTokens: config.openai.maxanswer,
                   temperature: 1,
