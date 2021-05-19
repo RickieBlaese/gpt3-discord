@@ -2,11 +2,22 @@
   "openai": {
     "token": "",
     "botfile": "",
-    "maxanswer": 0
+    "maxanswer": 0,
+    "model": "curie"
   },
   "bot": {
     "token": "",
-    "prefix": ""
+    "prefix": "",
+    "webhooks": {
+      "messages": {
+        "id": "",
+        "secret": ""
+      },
+      "tokens": {
+        "id": "",
+        "secret": ""
+      }
+    }
   },
   "dailytokens": 0,
   "tokenprice": 0,
