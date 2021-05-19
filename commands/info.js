@@ -17,7 +17,7 @@ module.exports = {
         { name: 'What can I talk about?', value: `The topics I talk about include video games, cooking and art.` },
         { name: 'Models', value: `Currently I use the ${client.config.openai.model} model to generate messages, and the ${client.config.openai.nicknamemodel} model to generate nicknames.` },
         { name: 'Disclaimer', value: `All messages I generate are the responsibility of **the user that generated the message**, and aren't associated with OpenAI in any way.` }
-    	).setColor(`#${client.config.brandcolour}`).setFooter(`By rosee#0001 | Ran and operated by ${owner.username}#${owner.discriminator}`);
+    	).setColor(`#${client.config.brandcolour}`).setFooter(`By rosee#0001 | Owned by ${owner.username}#${owner.discriminator}`);
 		message.inlineReply(infoembed);
 	},
 };
