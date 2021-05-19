@@ -8,12 +8,21 @@ var wordfilter = require('wordfilter');
 var filter = require('leo-profanity');
 wordfilter.clearList();
 wordfilter.addWords(require("../bad.json").list);
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const webhooks = {};
+
+client.fetchWebhook(config.bot.webhooks.messages.id, config.bot.webhooks.messages.secret).then(webhook=>{
+	webhooks.messages = webhook;
+});
+
 
 isBadInput = wordfilter.blacklisted;
 
 module.exports = {
   getAnswer(message){
     return new Promise((resolve, reject)=>{
+      var botlib = require('./lib');
       database.getTokens(message.author.id).then(remainingtokens=>{
         database.getMessages(message.author.id).then(messages=>{
           var toask = `This user is talking on Discord are having a conversation on Discord. Only talk about video games, cooking and art.\n\n`;
@@ -34,10 +43,10 @@ module.exports = {
           }
           database.takeTokens(message.author.id, tokenlength).then(newuser=>{
             openai.complete({
-              engine: 'curie',
+              engine: config.openai.model,
               prompt: toask,
               maxTokens: config.openai.maxanswer,
-              temperature: 0.8,
+              temperature: 0.9,
               topP: 1,
               presencePenalty: 0,
               frequencyPenalty: 0.3,
@@ -77,6 +86,7 @@ module.exports = {
                     if((!filter.check(response.data.choices[0].text)) && output_label == "2"){
                       output_label = "1";
                     }
+
                   }
                 }
                 switch (output_label) {
@@ -84,6 +94,23 @@ module.exports = {
                   case "1":
                     resolve(response.data.choices[0].text);
                     database.addMessage(message.cleanContent.substring(6), response.data.choices[0].text, message.author.id);
+                    outputlength = tokenizer.tokenize(response.data.choices[0].text).length;
+                    const prices = {
+                      davinci: 0.06/1000,
+                      curie: 0.0060/1000,
+                      babbage: 0.0012/1000,
+                      ada: 0.0008/1000
+                    }
+                    var messageembed = new Discord.MessageEmbed()
+                      .setTitle(`Message`)
+                      .addFields(
+                        { name: 'User', value: `${message.author.id} <@${message.author.id}>` },
+                        { name: 'Input', value: `${message.cleanContent.substring(6)}`},
+                        { name: 'Output', value: `${response.data.choices[0].text}`},
+                        { name: 'Tokens used', value: `${botlib.thousands(tokenlength)} + ${botlib.thousands(outputlength)} = ${botlib.thousands(tokenlength + outputlength)}`, inline:true},
+                        { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength)} + $${(prices[config.openai.model]*outputlength)} = $${(prices[config.openai.model]*(tokenlength+outputlength))}`, inline:true}
+                      ).setColor(config.brandcolour);
+                    webhooks.messages.send(messageembed);
                     break;
                   case "2":
                     // var tosend = filter.clean(response.data.choices[0].text, "\\♥", 1);

@@ -6,7 +6,7 @@ const Discord = require('discord.js');
 const client = new Discord.Client();
 const webhooks = {};
 
-client.fetchWebhook('844531807386468352', 'SIYVbEwrouUicYc_sbhRd4WxRp1kN3WDoixrVzrKi0rtdfcfdN3hZyEJq3f2l8-623kY').then(webhook=>{
+client.fetchWebhook(config.bot.webhooks.tokens.id, config.bot.webhooks.tokens.secret).then(webhook=>{
 	webhooks.tokens = webhook;
 });
 
