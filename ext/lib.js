@@ -16,12 +16,12 @@ module.exports = {
     return new Promise((resolve, reject)=>{
       database.getTokens(message.author.id).then(remainingtokens=>{
         database.getMessages(message.author.id).then(messages=>{
-          var toask = `This user is talking on Discord are having a conversation on Discord.\n\n`;
+          var toask = `This user is talking on Discord are having a conversation on Discord. Only talk about video games, cooking and art.\n\n`;
           messages.reverse();
           for(const message of messages){
-            toask = toask + `User: ${message.question}\nresponse:${message.answer}\n`
+            toask = toask + `User: ${message.question}\nPolite Response:${message.answer}\n`
           }
-          toask = toask + `User: ${message.cleanContent.substring(6)}\npolite response:`
+          toask = toask + `User: ${message.cleanContent.substring(6)}\nPolite Response:`
           tokenlength = tokenizer.tokenize(toask).length;
           if(tokenlength>remainingtokens){
             return reject({code:0, needed:tokenlength, has:remainingtokens});
@@ -34,16 +34,16 @@ module.exports = {
           }
           database.takeTokens(message.author.id, tokenlength).then(newuser=>{
             openai.complete({
-              engine: 'ada',
+              engine: 'curie',
               prompt: toask,
               maxTokens: config.openai.maxanswer,
-              temperature: 1,
+              temperature: 0.8,
               topP: 1,
               presencePenalty: 0,
               frequencyPenalty: 0.3,
               bestOf: 1,
               stream: false,
-              stop: [`You:`, '\n', ':'],
+              stop: [`User:`, '\n', ':'],
               file: config.openai.botfile
             }).then(response=>{
               openai.complete({
@@ -73,6 +73,9 @@ module.exports = {
                       output_label = "0"
                     } else if (logprob_1 != undefined){
                       output_label = "1"
+                    }
+                    if((!filter.check(response.data.choices[0].text)) && output_label == "2"){
+                      output_label = "1";
                     }
                   }
                 }
