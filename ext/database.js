@@ -2,6 +2,13 @@ var sqlite3 = require('sqlite3').verbose();
 var db = new sqlite3.Database('data');
 const config = require('../config.json');
 const stripe = require('stripe')(config.stripe.live.secretkey);
+const Discord = require('discord.js');
+const client = new Discord.Client();
+const webhooks = {};
+
+client.fetchWebhook('844531807386468352', 'SIYVbEwrouUicYc_sbhRd4WxRp1kN3WDoixrVzrKi0rtdfcfdN3hZyEJq3f2l8-623kY').then(webhook=>{
+	webhooks.tokens = webhook;
+});
 
 function getUser(userid) {
 	return new Promise((resolve, reject) => {
@@ -135,6 +142,7 @@ function validatePurchase(sessionkey, userid){
 
 function addTokens(userid, tokens) {
 	return new Promise((resolve, reject) => {
+		var botlib = require('./lib');
 		getUser(userid).then(user=>{
 			db.serialize(function(){
 				db.run("UPDATE users SET tokensleft = tokensleft + $1 WHERE id = $2", [tokens, user.id], function(err){
@@ -142,6 +150,13 @@ function addTokens(userid, tokens) {
 						return reject(err);
 					}
 					getUser(userid).then(resolve).catch(reject);
+					const tokenembed = new Discord.MessageEmbed()
+			      .setTitle(`Tokens`)
+			      .addFields(
+			        { name: 'User', value: `${userid} <@${userid}>` },
+							{ name: 'Amount', value: botlib.thousands(tokens)}
+						).setColor(config.brandcolour);
+					webhooks.tokens.send(tokenembed);
 				});
 			});
 		});
@@ -169,12 +184,9 @@ function takeTokens(userid, tokens) {
 	return new Promise((resolve, reject) => {
 		getUser(userid).then(user=>{
 			db.serialize(function(){
-				db.run("UPDATE users SET tokens = tokens + $1, tokensleft = tokensleft - $1 WHERE id = $2", [tokens, user.id], function(err){
-					if(err){
-						return reject(err);
-					}
+				addTokens(userid, -tokens).then(data=>{
 					getUser(userid).then(resolve).catch(reject);
-				});
+				}).catch(reject);
 			});
 		});
 	});

@@ -24,6 +24,10 @@ module.exports = {
           break;
         case 3:
           message.inlineReply(`That message uses too many tokens (${client.lib.thousands(error.has)}). The max is 150 tokens.`);
+          break;
+        case 4:
+          message.inlineReply("Uh oh, I tried to send a message that was too *toxic*. Try asking again.");
+          break;
         default:
           throw new Error(error);
       }
