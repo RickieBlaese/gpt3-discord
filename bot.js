@@ -42,6 +42,7 @@ client.on('message', message => {
 	const command = args.shift().toLowerCase();
   if (!client.commands.has(command)) return;
   const commandObj = client.commands.get(command);
+	if(message.guild == undefined && (!commandObj.indms)) return message.inlineReply("This command doesn't work in DMs.");
 	client.database.getUser(message.author.id).then(user=>{
 		if(commandObj.perms){
 			if(commandObj.perms>user.perms){

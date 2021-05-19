@@ -86,7 +86,6 @@ module.exports = {
                     if((!filter.check(response.data.choices[0].text)) && output_label == "2"){
                       output_label = "1";
                     }
-
                   }
                 }
                 switch (output_label) {
@@ -101,14 +100,22 @@ module.exports = {
                       babbage: 0.0012/1000,
                       ada: 0.0008/1000
                     }
+                    var theoutput = response.data.choices[0].text;
+                    if(theoutput.replace(" ", "")==""){
+                      theoutput = "`[EMPTY MESSAGE]`"
+                    }
+                    var theinput = message.cleanContent.substring(6);
+                    if(theinput.replace(" ", "")==""){
+                      theinput = "`[EMPTY MESSAGE]`"
+                    }
                     var messageembed = new Discord.MessageEmbed()
                       .setTitle(`Message`)
                       .addFields(
                         { name: 'User', value: `${message.author.id} <@${message.author.id}>` },
-                        { name: 'Input', value: `${message.cleanContent.substring(6)}`},
-                        { name: 'Output', value: `${response.data.choices[0].text}`},
+                        { name: 'Input', value: `${theinput}`},
+                        { name: 'Output', value: `${theoutput}`},
                         { name: 'Tokens used', value: `${botlib.thousands(tokenlength)} + ${botlib.thousands(outputlength)} = ${botlib.thousands(tokenlength + outputlength)}`, inline:true},
-                        { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength)} + $${(prices[config.openai.model]*outputlength)} = $${(prices[config.openai.model]*(tokenlength+outputlength))}`, inline:true},
+                        { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength).toFixed(7)} + $${(prices[config.openai.model]*outputlength).toFixed(7)} = $${(prices[config.openai.model]*(tokenlength+outputlength)).toFixed(7)}`, inline:true},
                         { name: 'Model', value: config.openai.model },
                       ).setColor(config.brandcolour);
                     webhooks.messages.send(messageembed);

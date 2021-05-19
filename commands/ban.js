@@ -2,6 +2,7 @@ module.exports = {
 	name: 'ban',
   perms: 2,
 	description: 'ban users',
+  indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;
     if(args.length<=0){

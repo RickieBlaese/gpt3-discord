@@ -2,6 +2,7 @@ module.exports = {
 	name: 'activate',
   cooldown: 5,
 	description: 'Activate your token purchase.',
+  indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;
     if(args.length<=0){

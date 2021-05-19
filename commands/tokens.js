@@ -2,6 +2,7 @@ module.exports = {
 	name: 'tokens',
   cooldown: 5,
 	description: 'See how many tokens you have',
+  indms: true,
 	execute(client, message, args) {
     client.database.getTokens(message.author.id).then(tokens=>{
       client.database.getUser(message.author.id).then(user=>{

@@ -2,6 +2,7 @@ module.exports = {
 	name: 'buy',
   cooldown: 2,
 	description: 'Buy tokens',
+  indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;
     if(args.length<=0){

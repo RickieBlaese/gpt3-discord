@@ -2,6 +2,7 @@ module.exports = {
 	name: 'help',
   cooldown: 0,
 	description: 'See this message',
+  indms: true,
 	execute(client, message, args) {
     client.database.getUser(message.author.id).then(user=>{
       const Discord = require(`discord.js`);

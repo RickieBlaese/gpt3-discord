@@ -2,6 +2,7 @@ module.exports = {
 	name: 'ping',
   cooldown: 5,
 	description: 'Returns the server latency',
+	indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;
     const pingembed = new Discord.MessageEmbed()

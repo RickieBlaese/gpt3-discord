@@ -2,6 +2,7 @@ module.exports = {
 	name: 'reload',
   perms: 4,
 	description: 'reload everything (duh)',
+  indms: true,
 	execute(client, message, args) {
     client.database.isAdmin(message.author.id).then(isadmin=>{
       if(isadmin){
