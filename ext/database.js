@@ -150,11 +150,17 @@ function addTokens(userid, tokens) {
 						return reject(err);
 					}
 					getUser(userid).then(resolve).catch(reject);
+					function needsplus(number){
+						if(number>=0){
+							return "+"
+						}
+						return ""
+					}
 					const tokenembed = new Discord.MessageEmbed()
 			      .setTitle(`Tokens`)
 			      .addFields(
 			        { name: 'User', value: `${userid} <@${userid}>` },
-							{ name: 'Amount', value: botlib.thousands(tokens)}
+							{ name: 'Amount', value: `${needsplus(tokens)}${botlib.thousands(tokens)}`}
 						).setColor(config.brandcolour);
 					webhooks.tokens.send(tokenembed);
 				});
