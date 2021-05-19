@@ -53,7 +53,7 @@ module.exports = {
                       responsemessage.inlineReply("The AI returned nothing, please try again.");
                     });
                   }
-                  responsemessage.inlineReply(`Your generated nickname is ${nickname}.`);
+                  responsemessage.inlineReply(`Your generated nickname is${nickname}.`);
                   message.member.edit({nick:nickname})
                     .catch(err=>{
                       responsemessage.inlineReply("I couldn't change your nickname, please do it manually.");
