@@ -119,7 +119,7 @@ module.exports = {
                         { name: 'Tokens used', value: `${botlib.thousands(tokenlength)} + ${botlib.thousands(outputlength)} = ${botlib.thousands(tokenlength + outputlength)}`, inline:true},
                         { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength).toFixed(7)} + $${(prices[config.openai.model]*outputlength).toFixed(7)} = $${(prices[config.openai.model]*(tokenlength+outputlength)).toFixed(7)}`, inline:true},
                         { name: 'Model', value: config.openai.model },
-                      ).setColor(config.brandcolour);
+                      ).setColor(config.brandcolour).setTimestamp();
                     webhooks.messages.send(messageembed);
                     break;
                   case "2":

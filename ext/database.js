@@ -161,7 +161,7 @@ function addTokens(userid, tokens) {
 			      .addFields(
 			        { name: 'User', value: `${userid} <@${userid}>` },
 							{ name: 'Amount', value: `${needsplus(tokens)}${botlib.thousands(tokens)}`}
-						).setColor(config.brandcolour);
+						).setColor(config.brandcolour).setTimestamp();
 					webhooks.tokens.send(tokenembed);
 				});
 			});
