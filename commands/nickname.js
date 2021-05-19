@@ -8,13 +8,13 @@ module.exports = {
 	execute(client, message, args) {
 		const Discord = client.Discord;
     if(!message.member.hasPermission(Discord.Permissions.CHANGE_NICKNAME)){
-      return message.inlineReply("You must have the `change_nickname` permission to run this command.")
+      return message.inlineReply("You must have the `change_nickname` permission to run this command.");
     }
     if(!message.guild.me.hasPermission(Discord.Permissions.MANAGE_NICKNAMES)){
-      return message.inlineReply("I don't have the `manage_nicknames` permission. Update my role and try again.")
+      return message.inlineReply("I don't have the `manage_nicknames` permission. Update my role and try again.");
     }
     if(message.guild.owner.id == message.author.id){
-      return message.inlineReply("You're the owner, I can't manage your nickname.")
+      return message.inlineReply("You're the owner, I can't manage your nickname.");
     }
     if(message.member.roles.highest.position>=message.guild.me.roles.highest.position){
       return message.inlineReply("My role isn't high enough to manage your nickname, put my role higher than yours and try again.")
