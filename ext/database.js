@@ -201,7 +201,7 @@ function takeTokens(userid, tokens) {
 function createUser(userid) {
 	return new Promise((resolve, reject) => {
     db.serialize(function(){
-      db.run("INSERT INTO users(userid, tokens) VALUES($1, $2)", [userid, config.dailytokens], function(err){
+      db.run("INSERT INTO users(userid, tokensleft) VALUES($1, $2)", [userid, config.dailytokens], function(err){
         if(err){
           return reject(err);
         }
