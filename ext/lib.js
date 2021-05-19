@@ -83,10 +83,10 @@ module.exports = {
                     database.addMessage(message.cleanContent.substring(6), response.data.choices[0].text, message.author.id);
                     break;
                   case "2":
-                    var tosend = filter.clean(response.data.choices[0].text, "\\♥", 1);
-                    resolve(tosend);
-                    database.addMessage(message.cleanContent.substring(6), tosend, message.author.id);
-                    break;
+                    // var tosend = filter.clean(response.data.choices[0].text, "\\♥", 1);
+                    // resolve(tosend);
+                    // database.addMessage(message.cleanContent.substring(6), tosend, message.author.id);
+                    // break;
                     reject({code:4, contentfilter:contentfilter.data.choices[0].text});
                     database.takeTokens(message.author.id, -tokenlength).then(newuser=>{
                     }).catch(console.error);
