@@ -108,7 +108,8 @@ module.exports = {
                         { name: 'Input', value: `${message.cleanContent.substring(6)}`},
                         { name: 'Output', value: `${response.data.choices[0].text}`},
                         { name: 'Tokens used', value: `${botlib.thousands(tokenlength)} + ${botlib.thousands(outputlength)} = ${botlib.thousands(tokenlength + outputlength)}`, inline:true},
-                        { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength)} + $${(prices[config.openai.model]*outputlength)} = $${(prices[config.openai.model]*(tokenlength+outputlength))}`, inline:true}
+                        { name: 'Cost', value: `$${(prices[config.openai.model]*tokenlength)} + $${(prices[config.openai.model]*outputlength)} = $${(prices[config.openai.model]*(tokenlength+outputlength))}`, inline:true},
+                        { name: 'Model', value: config.openai.model },
                       ).setColor(config.brandcolour);
                     webhooks.messages.send(messageembed);
                     break;
