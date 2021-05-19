@@ -7,10 +7,10 @@ module.exports = {
 	description: 'Get the bot to generate a new nickname for you!',
 	execute(client, message, args) {
 		const Discord = client.Discord;
-    if(!message.member.permissions.has(Discord.Permissions.CHANGE_NICKNAME)){
+    if(!message.member.hasPermission(Discord.Permissions.CHANGE_NICKNAME)){
       return message.inlineReply("You must have the `change_nickname` permission to run this command.")
     }
-    if(!message.guild.me.permissions.has(Discord.Permissions.MANAGE_NICKNAMES)){
+    if(!message.guild.me.hasPermission(Discord.Permissions.MANAGE_NICKNAMES)){
       return message.inlineReply("I don't have the `manage_nicknames` permission. Update my role and try again.")
     }
     if(message.guild.owner.id == message.author.id){
