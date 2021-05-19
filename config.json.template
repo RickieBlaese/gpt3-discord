@@ -4,7 +4,8 @@
     "botfile": "",
     "maxanswer": 0,
     "model": "curie",
-    "nicknamemodel": "curie-instruct-beta"
+    "nicknamemodel": "curie-instruct-beta",
+    "toxicitythresh": -0.355
   },
   "bot": {
     "token": "",

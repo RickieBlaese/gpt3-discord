@@ -65,7 +65,7 @@ module.exports = {
                 presence_penalty:0,
                 logprobs:10
               }).then(contentfilter=>{
-                var toxicitythresh = -0.355;
+                var toxicitythresh = client.openai.toxicitythresh;
                 var output_label = contentfilter.data.choices[0].text;
                 if (output_label == "2"){
                   logprobs = contentfilter.data.choices[0].logprobs.top_logprobs[0];
