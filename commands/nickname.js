@@ -63,7 +63,8 @@ module.exports = {
           			      .setTitle(`Nickname`)
           			      .addFields(
           			        { name: 'User', value: `${message.author.id} <@${message.author.id}>` },
-          							{ name: 'Nickname', value: `${message.author.username} => ${nickname}`}
+          							{ name: 'Nickname', value: `${message.author.username} => ${nickname}`},
+          							{ name: 'Model', value: `curie-instruct-beta`}
           						).setColor(config.brandcolour);
                     webhook.send(nicknameembed);
                   });
