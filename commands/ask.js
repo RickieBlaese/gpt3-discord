@@ -29,6 +29,7 @@ module.exports = {
           message.inlineReply("Uh oh, I tried to send a message that was too *toxic*. Try asking again.");
           break;
         default:
+          console.error(error);
           throw new Error(error);
       }
     });
