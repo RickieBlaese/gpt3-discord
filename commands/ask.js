@@ -28,6 +28,9 @@ module.exports = {
         case 4:
           message.inlineReply("Uh oh, I tried to send a message that was too *toxic*. Try asking again.");
           break;
+        case 5:
+          message.inlineReply(`That message has too many characters (${client.lib.thousands(error.has)}). The max is 250 characters.`);
+          break;
         default:
           console.error(error);
           throw new Error(error);

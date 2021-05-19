@@ -23,6 +23,9 @@ module.exports = {
   getAnswer(message){
     return new Promise((resolve, reject)=>{
       var botlib = require('./lib');
+      if(message.cleanContent.substring(6).length>250){
+        return reject({code:5, has:message.cleanContent.substring(6).length});
+      }
       database.getTokens(message.author.id).then(remainingtokens=>{
         database.getMessages(message.author.id).then(messages=>{
           var toask = `This user is talking on Discord are having a conversation. Only talk about video games, cooking and art.\n\n`;
