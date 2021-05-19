@@ -7,11 +7,9 @@ module.exports = {
     message.channel.startTyping();
     client.lib.getAnswer(message).then(data=>{
       if(data.replace(" ", "")=="" || !data){
-        console.log(data);
         data = "`[EMPTY MESSAGE]`"
       }
       message.inlineReply(data).catch(err=>{
-        console.error(err);
         message.inlineReply("`[EMPTY MESSAGE]`");
       });
       message.channel.stopTyping();
