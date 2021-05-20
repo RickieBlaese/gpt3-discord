@@ -53,7 +53,7 @@ client.on('message', message => {
 			return;
 		}
 		if(!user.eula){
-			message.inlineReply("To use Honeybot, you must agree to our EULA. To agree, please react to this message with 👍.")
+			return message.inlineReply("To use Honeybot, you must agree to our EULA. To agree, please react to this message with 👍.")
 				.then(agreemessage=>{
 					agreemessage.react('👍').then(()=>{
 						const filter = (reaction, user) => reaction.emoji.name === '👍' && user.id === message.author.id;
