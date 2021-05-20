@@ -56,7 +56,8 @@ module.exports = {
               bestOf: 1,
               stream: false,
               stop: [`User:`, '\n', ':'],
-              file: config.openai.botfile
+              file: config.openai.botfile,
+							user: message.author.id
             }).then(response=>{
               openai.complete({
                 engine:"content-filter-alpha-c4",
@@ -66,7 +67,8 @@ module.exports = {
                 top_p:1,
                 frequency_penalty:0,
                 presence_penalty:0,
-                logprobs:10
+                logprobs:10,
+								user: message.author.id
               }).then(contentfilter=>{
                 var toxicitythresh = config.openai.toxicitythresh;
                 var output_label = contentfilter.data.choices[0].text;
