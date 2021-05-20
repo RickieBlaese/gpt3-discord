@@ -52,6 +52,7 @@ app.use(session({
 }))
 app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
+app.get('/callback', staticpage("callback"));
 app.get('/added', (req, res) => {
   if(req.query.guild_id){
     manager.broadcastEval(`
