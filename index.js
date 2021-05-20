@@ -118,7 +118,7 @@ app.get('/eula', staticpage('eula'));
 app.get('/:id', (req, res) => {
   var ref = req.params.id;
   database.db.serialize(function(){
-    database.db.get("SELECT * FROM ref WHERE code = $1;", [ref =], function(err, data){
+    database.db.get("SELECT * FROM ref WHERE code = $1;", [ref], function(err, data){
       if(!data){
         return res.render('404');
       }
