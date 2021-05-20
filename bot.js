@@ -49,8 +49,27 @@ client.on('message', message => {
 				return;
 			}
 		}
-		if(user.banned==1){
+		if(user.banned){
 			return;
+		}
+		if(!user.eula){
+			message.inlineReply("To use Honeybot, you must agree to our EULA. To agree, please react to this message with 👍.")
+				.then(agreemessage=>{
+					agreemessage.react('👍').then(()=>{
+						const filter = (reaction, user) => reaction.emoji.name === '👍' && user.id === message.author.id;
+						agreemessage.awaitReactions(filter, { time: 15000 })
+						  .then(collected => {
+								client.database.db.serialize(function(){
+									client.database.db.query("UPDATE users SET eula = 1 WHERE userid = $1", [message.author.id], function(err){
+										if(err){
+											throw new Error(err);
+										}
+										agreemessage.inlineReply("Thanks for agreeing to our EULA! You can now use Honeybot.");
+									});
+								});
+							});
+					});
+				});
 		}
 		if (!cooldowns.has(commandObj.name)) {
 	  	cooldowns.set(commandObj.name, new Discord.Collection());
