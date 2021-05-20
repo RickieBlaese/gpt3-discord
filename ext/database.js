@@ -73,8 +73,8 @@ function moreTokens(amount, userid){
 	return new Promise((resolve, reject)=>{
 		var botlib = require('./lib');
 		stripe.checkout.sessions.create({
-	    success_url: 'https://solithcy.xyz/gpt3/callback?session_id={CHECKOUT_SESSION_ID}',
-	    cancel_url: 'https://solithcy.xyz/gpt3',
+	    success_url: 'https://honeybot.xyz/callback?session_id={CHECKOUT_SESSION_ID}',
+	    cancel_url: 'https://honeybot.xyz',
 	    payment_method_types: ['card'],
 	    line_items: [
 				{

@@ -21,7 +21,7 @@ module.exports = {
     }).then(msg=>{
       message.inlineReply("Please check your DMs.");
       client.database.moreTokens(amount, message.author.id).then(session=>{
-        message.author.send(`Checkout here: https://solithcy.xyz/gpt3/checkout?id=${session.id}`).catch(err=>{
+        message.author.send(`Checkout here: https://honeybot.xyz/checkout?id=${session.id}`).catch(err=>{
           message.inlineReply("Please turn on your DMs so I can send you more info.");
         })
       });
