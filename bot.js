@@ -56,7 +56,11 @@ client.on('message', message => {
 			return message.inlineReply("To use Honeybot, you must agree to our EULA. To agree, please react to this message with 👍.")
 				.then(agreemessage=>{
 					agreemessage.react('👍').then(()=>{
-						const filter = (reaction, user) => reaction.emoji.name === '👍' && user.id === message.author.id;
+						const filter = (reaction, user) => {
+							console.log(reaction.emoji.name === '👍' && user.id === message.author.id);
+							return reaction.emoji.name === '👍' && user.id === message.author.id
+
+						};
 						agreemessage.awaitReactions(filter, { time: 15000 })
 						  .then(collected => {
 								client.database.db.serialize(function(){
