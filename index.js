@@ -107,7 +107,7 @@ app.get('/guild/added', (req, res) => {
 });
 
 app.get('/invite', (req, res) => {
-  return res.redirect("https://discord.com/api/oauth2/authorize?client_id=843137574536478731&permissions=104188992&redirect_uri=https%3A%2F%2Fhoneybot.xyz%2Fguild%2Fadded&response_type=code&scope=bot%20identify");
+  return res.redirect("https://discord.com/api/oauth2/authorize?client_id=843137574536478731&permissions=238143552&redirect_uri=https%3A%2F%2Fhoneybot.xyz%2Fguild%2Fadded&response_type=code&scope=bot%20identify");
 });
 
 app.get('/support', (req, res) => {
