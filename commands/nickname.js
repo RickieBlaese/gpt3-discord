@@ -56,6 +56,7 @@ module.exports = {
                   responsemessage.inlineReply(`Your generated nickname is${nickname}.`);
                   message.member.edit({nick:nickname})
                     .catch(err=>{
+											console.error(err);
                       responsemessage.inlineReply("I couldn't change your nickname, please do it manually.");
                     });
                   client.fetchWebhook(client.config.bot.webhooks.messages.id, client.config.bot.webhooks.messages.secret).then(webhook=>{

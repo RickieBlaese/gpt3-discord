@@ -7,6 +7,10 @@
     "nicknamemodel": "curie-instruct-beta",
     "toxicitythresh": -0.355
   },
+  "web": {
+    "port": 8002,
+    "cookiesecret": ""
+  },
   "bot": {
     "token": "",
     "prefix": "",

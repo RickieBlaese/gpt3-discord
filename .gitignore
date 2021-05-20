@@ -4,3 +4,4 @@ errors/logs/*
 !errors/logs/README.md
 data
 editdatabase.js
+sessions

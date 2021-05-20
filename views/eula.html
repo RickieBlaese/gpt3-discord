@@ -1,0 +1,80 @@
+<html>
+  <head>
+    <title>Honeybot EULA</title>
+    <base href="https://honeybot.xyz/" target="_blank">
+    <link rel="icon" href="honeybot.png?v=1" type="image/png">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+      body{
+        overflow: auto;
+      }
+      #honeybotimage{
+        border-radius: 1rem;
+        box-shadow: 0px 0px 25px 0 rgb(0 0 0 / 50%);
+        height: 70vh;
+        width: auto;
+      }
+      .terms{
+        text-align: left;
+        padding-left:12.5vw;
+        padding-right:12.5vw;
+        color: white;
+      }
+      @media only screen and (min-width: 600px) and (max-width: 992px){
+        #honeybotimage{
+          height: 55vh;
+          width: 90vw;
+          object-fit: cover;
+          object-position: left;
+        }
+        .terms{
+          padding-left:10vw;
+          padding-right:10vw;
+        }
+        .subtitle{
+          padding-left:1vw;
+          padding-right:1vw;
+        }
+      }
+      .honeybottext{
+        color: #EBA937
+      }
+      @import "https://fonts.googleapis.com/css2?family=Source+Sans+Pro&display=swap";body{font-family:'Source Sans Pro',sans-serif;background:#23272A;user-select:none;text-shadow:2px 2px #000}.selectable{user-select:text;cursor:text}.title{position:relative;font-size:3.7em;color:#fff;text-align:center}.therose{font-size:1.5em;line-height:1.8em}.title .text-wrapper{position:relative;display:inline-block;padding-top:.2em;padding-right:.05em;padding-bottom:.1em;width:100%;overflow:hidden}.title .letter{transform-origin:0 100%;display:inline-block;line-height:1em;transform:translateY(1.1em) translateX(0.55em) rotateZ(180deg)}.subtitle{color:#fff;text-align:center;font-size:1.5em}.stuffmade,.honeybotimage{font-size:1.8em}.freelance{font-size:1.3em;line-height:.5em}a{color:#7289DA}a:visited{color:#7289DA}@media only screen and (min-width: 600px) and (max-width: 992px){.title{font-size:7.5em}.therose{font-size:1.5em;line-height:1.8em}.subtitle{font-size:3.7em}.stuffmade,.honeybotimage{font-size:4em}.freelance{font-size:3em;line-height:1em}}.shit{line-height:.5em}.emoji{font-family:apple color emoji,segoe ui emoji,noto color emoji,android emoji,emojisymbols,emojione mozilla,twemoji mozilla,segoe ui symbol}.discordcontact{width:auto;display:inline-block}.discord{cursor:pointer;text-decoration:underline;user-select:auto}.discordparent{display:flex;justify-content:center;align-items:center}.copied{position:absolute;left:calc(100% - 4.5em);top:-120%;opacity:0;z-index:-1}
+    </style>
+  </head>
+  <body>
+    <div class="main">
+      <h1 class="title">
+        <span class="text-wrapper">
+          <span class="letters" style="">End User License Agreement</span>
+        </span>
+      </h1>
+      <div class="col-1-2">
+        <h2 class="subtitle" style="">
+          By using Honeybot ("the Bot"), you ("the User") agree to follow Honeybot's EULA:
+        </h2>
+        <h3 class="terms">
+          As a User, I will not use Honeybot for any malicious purposes. I understand and agree to follow the Terms and Conditions for <a href="https://beta.openai.com/terms-of-use">OpenAI</a> and <a href="https://discord.com/terms">Discord</a>.
+          <br>
+          I understand that the following data will be stored:
+          <ul>
+            <li>User identifiers such as my username or user ID.</li>
+            <li>Any purchases I make with Honeybot.</li>
+            <li>My message history with Honeybot. This history will be kept for a maximum of 24 hours, and I can delete it manually with <code>h.reset</code>.</li>
+          </ul>
+          I consent to my data being stored this way, and I understand I can request it to be deleted at any time via the <a href="support">Discord server</a>.
+          <br>
+          I agree to my messages and user identifiers being sent to GPT-3 via <a href="https://beta.openai.com">OpenAI's API</a>.
+          <br>
+          I understand that my account can be banned from using Honeybot at any time, with or without reason.
+          <br>
+          I agree and consent fully to the EULA shown above.
+        </h3>
+      </div>
+    </div>
+    <script>
+      $(".main").html($(".main").html().replaceAll("Honeybot", "<span class='honeybottext'>Honeybot</span>"));
+    </script>
+  </body>
+</html>
