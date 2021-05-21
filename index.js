@@ -1,4 +1,5 @@
 const { ShardingManager } = require('discord.js');
+const Discord = require('discord.js');
 const token = require('./config.json').bot.token;
 const manager = new ShardingManager('./bot.js', { token: token });
 const database = require('./ext/database');
@@ -56,7 +57,6 @@ app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
   database.getPurchase(req.query.session_id).then(purchase=>{
-    console.log(purchase);
     sessionid = new Buffer.from(req.query.session_id);
 		sessionid = sessionid.toString('base64');
     database.validatePurchase(sessionid, purchase.userid)
@@ -64,24 +64,20 @@ app.get('/callback', (req, res) => {
         manager.broadcastEval(`
           (async () => {
             let theguy = this.users.fetch('${purchase.userid}');
+            theguy.send("Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.")
             if(theguy){
               return theguy;
             }
           })();
           `, 0)
           .then(theuser=>{
-            console.log(theuser);
-            theuser.send(`Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.`)
-            .catch(console.err);
           }).catch(err=>{
-            console.error(err);
           });
         })
         .catch(err=>{
         });
       })
       .catch(err=>{
-        console.error(err);
       });
 });
 app.get('/added', (req, res) => {
