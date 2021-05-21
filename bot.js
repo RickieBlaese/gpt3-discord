@@ -57,7 +57,7 @@ client.on('message', message => {
 				.then(agreemessage=>{
 					agreemessage.react('👍').then(()=>{
 						const filter = (reaction, user) => reaction.emoji.name === '👍' && user.id === message.author.id;
-						agreemessage.awaitReactions(filter, { time: 15000, max: 1 })
+						agreemessage.awaitReactions(filter, { time: 15000, max: 1, errors: ['time']})
 						  .then(collected => {
 								client.database.db.serialize(function(){
 									client.database.db.run("UPDATE users SET eula = 1 WHERE userid = $1", [message.author.id], function(err){
@@ -67,7 +67,8 @@ client.on('message', message => {
 										agreemessage.inlineReply("Thanks for agreeing to our EULA! You can now use Honeybot.");
 									});
 								});
-							});
+							})
+							.catch(()=>{});
 					});
 				});
 		}
