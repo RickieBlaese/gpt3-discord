@@ -11,9 +11,9 @@ module.exports = {
         if(user.tokensgiventime < new Date().getTime()-86400000){
           msg = `You currently have ${client.lib.thousands(user.tokensleft)} tokens. As soon as your tokens dip under ${client.lib.thousands(client.config.dailytokens)}, your tokens will be set to ${client.lib.thousands(client.config.dailytokens)}.`
         }else if(user.tokensleft > client.config.dailytokens){
-          msg = `You currently have ${client.lib.thousands(user.tokensleft)} tokens. In ${client.lib.parsetime(timeleft, "in ")}, if your tokens dip under ${client.lib.thousands(client.config.dailytokens)} your tokens will be set to ${client.lib.thousands(client.config.dailytokens)}.`
+          msg = `You currently have ${client.lib.thousands(user.tokensleft)} tokens. In ${client.lib.parsetime(timeleft)}, if your tokens dip under ${client.lib.thousands(client.config.dailytokens)} your tokens will be set to ${client.lib.thousands(client.config.dailytokens)}.`
         }else{
-          msg = `You currently have ${client.lib.thousands(user.tokensleft)} tokens. Your tokens will be set to ${client.lib.thousands(client.config.dailytokens)} in ${client.lib.parsetime(timeleft, "in ")}.`
+          msg = `You currently have ${client.lib.thousands(user.tokensleft)} tokens. Your tokens will be set to ${client.lib.thousands(client.config.dailytokens)} in ${client.lib.parsetime(timeleft)}.`
         }
         msg = msg+`\nYou can buy tokens at a rate of **£${client.config.tokenprice} per token** (\`${client.config.bot.prefix}buy\`).`;
         message.inlineReply(msg);
