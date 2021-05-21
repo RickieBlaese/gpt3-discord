@@ -56,16 +56,11 @@ app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
-  console.log(req.query.session_id);
   database.getPurchase(req.query.session_id).then(purchase=>{
     sessionid = new Buffer.from(req.query.session_id);
 		sessionid = sessionid.toString('base64');
-    console.log(sessionid);
-    console.log(purchase);
     database.validatePurchase(sessionid, purchase.userid)
       .then(purchasedata=>{
-        console.log(purchase);
-        console.log(purchasedata);
         manager.broadcastEval(`
           (async () => {
              let theguy = await this.users.fetch('${purchase.userid}');
@@ -73,12 +68,12 @@ app.get('/callback', (req, res) => {
           })();
           `, 0)
           .then(theuser=>{
-          }).catch(console.error);
+          }).catch();
         })
         .catch(err=>{
         });
       })
-      .catch(console.error);
+      .catch();
 });
 app.get('/added', (req, res) => {
   if(req.query.guild_id){
