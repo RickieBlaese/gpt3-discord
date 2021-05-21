@@ -206,6 +206,7 @@ function takeTokens(userid, tokens) {
 			db.serialize(function(){
 				addTokens(userid, -tokens).then(data=>{
 					getUser(userid).then(resolve).catch(reject);
+					db.run("UPDATE users SET tokens = tokens + $1 WHERE userid = $2", [tokens, userid]);
 				}).catch(reject);
 			});
 		});
