@@ -63,9 +63,8 @@ app.get('/callback', (req, res) => {
       .then(purchasedata=>{
         manager.broadcastEval(`
           (async () => {
-            this.users.fetch('${purchase.userid}').then(theguy=>{
-              theguy.send("Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.").catch(console.error);
-            }).catch(console.error);
+             let theguy = await this.users.fetch('${purchase.userid}');
+             await theguy.send("Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.");
           })();
           `, 0)
           .then(theuser=>{
