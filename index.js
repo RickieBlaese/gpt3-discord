@@ -43,7 +43,7 @@ app.engine("html", require("dot-emc").init(
     }
 ).__express);
 app.set("view engine", "html");
-app.set('trust proxy', 1)
+app.set('trust proxy', 1);
 app.use(session({
   secret: config.web.cookiesecret,
   resave: false,
