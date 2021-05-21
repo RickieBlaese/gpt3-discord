@@ -2,7 +2,7 @@ module.exports = {
 	name: 'altertokens',
   perms: 3,
 	description: 'give users more tokens',
-  usage: '<user> <amount>'
+  usage: '<user> <amount>',
   indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;
