@@ -90,7 +90,9 @@ client.on('message', message => {
 	  try {
 	  	commandObj.execute(client, message, args);
 	  } catch (error) {
-	    errors.default.execute(client, message, error);
+			if (error.code !== Discord.Constants.APIErrors.MISSING_PERMISSIONS) {
+				errors.default.execute(client, message, error);
+			}
 	  }
 	});
 });
