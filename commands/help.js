@@ -16,7 +16,8 @@ module.exports = {
 						if(command.cooldown>=1){
 							cooldown=client.lib.parsetime(command.cooldown)
 						}
-						message.channel.send(`\`${client.config.bot.prefix}${command.name}\`: ${command.description}
+						message.channel.send(`\`${client.config.bot.prefix}${command.name}\`:
+>>> Description: ${command.description}
 Cooldown: ${cooldown}
 Works in DMs: ${command.indms}
 Required permission level: ${command.perms || "0"}`)
