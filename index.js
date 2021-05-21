@@ -2,6 +2,7 @@ const { ShardingManager } = require('discord.js');
 const token = require('./config.json').bot.token;
 const manager = new ShardingManager('./bot.js', { token: token });
 const database = require('./ext/database');
+const botlib = require('./ext/lib');
 
 manager.on('shardCreate', shard => console.log(`Launched shard ${shard.id}`));
 manager.spawn();
@@ -55,7 +56,7 @@ app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
   database.db.serialize(function(){
-    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", function(data){
+    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [req.query.session_id], function(data){
       if(!data){
         return;
       }
@@ -70,7 +71,7 @@ app.get('/callback', (req, res) => {
           })();
           `, 0)
           .then(theuser=>{
-            theuser.send(`Thanks for supporting us! ${client.lib.thousands(data.amount)} tokens have been added to your account.`);
+            theuser.send(`Thanks for supporting us! ${botlib.thousands(data.amount)} tokens have been added to your account.`);
           }).catch(err=>{
           });
       })
