@@ -10,13 +10,18 @@ module.exports = {
   		if(args.length>0){
   			if(client.commands.has(args[0])){
   				var command = client.commands.get(args[0]);
-  				// TODO: add more details
-  				var cooldown="no cooldown"
-  				if(command.cooldown>=1){
-  					cooldown=client.lib.parsetime(command.cooldown, true)
-  				}
-  				message.channel.send(`\`${client.config.bot.prefix}${command.name}\`: ${command.description}\nCooldown: ${cooldown}`)
-  				return;
+					if(command.perms >= user.perms){
+						// TODO: add more details
+						var cooldown="no cooldown"
+						if(command.cooldown>=1){
+							cooldown=client.lib.parsetime(command.cooldown)
+						}
+						message.channel.send(`\`${client.config.bot.prefix}${command.name}\`: ${command.description}
+							Cooldown: ${cooldown}
+							Works in DMs: ${command.indms}
+							Required permission level ${command.perms || "0"}`)
+							return;
+					}
   			}
   		}
       for (var entry of client.commands.entries()) {
