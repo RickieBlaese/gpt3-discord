@@ -21,7 +21,7 @@ module.exports = {
     }catch(e){
       return message.inlineReply("please provide a valid number");
     }
-    client.database.addTokens(user.id, tokens).then(user=>{
+    client.database.addTokens(user.id, tokens).then(botuser=>{
       return message.inlineReply(`${client.lib.thousands(tokens)} tokens have been added to ${user.username}'s account.`);
     })
 	},
