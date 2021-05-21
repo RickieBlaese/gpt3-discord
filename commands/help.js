@@ -10,7 +10,7 @@ module.exports = {
   		if(args.length>0){
   			if(client.commands.has(args[0])){
   				var command = client.commands.get(args[0]);
-					if(user.perms >= command.perms){
+					if(user.perms >= command.perms || (!command.perms)){
 						// TODO: add more details
 						var cooldown="no cooldown"
 						if(command.cooldown>=1){
