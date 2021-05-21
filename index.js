@@ -59,6 +59,8 @@ app.get('/callback', (req, res) => {
   database.getPurchase(req.query.session_id).then(purchase=>{
     sessionid = new Buffer.from(req.query.session_id);
 		sessionid = sessionid.toString('base64');
+    console.log(sessionid);
+    console.log(purchase);
     database.validatePurchase(sessionid, purchase.userid)
       .then(purchasedata=>{
         console.log(purchase);
