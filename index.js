@@ -61,6 +61,8 @@ app.get('/callback', (req, res) => {
 		sessionid = sessionid.toString('base64');
     database.validatePurchase(sessionid, purchase.userid)
       .then(purchasedata=>{
+        console.log(purchase);
+        console.log(purchasedata);
         manager.broadcastEval(`
           (async () => {
              let theguy = await this.users.fetch('${purchase.userid}');
