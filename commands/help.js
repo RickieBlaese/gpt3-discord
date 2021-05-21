@@ -19,7 +19,7 @@ module.exports = {
 						message.channel.send(`\`${client.config.bot.prefix}${command.name}\`:
 >>> Description: ${command.description}
 Cooldown: ${cooldown}
-Works in DMs: ${command.indms}
+Works in DMs: ${command.indms ? "Yes" : "No"}
 Required permission level: ${command.perms || "0"}`)
 							return;
 					}
