@@ -50,7 +50,7 @@ module.exports = {
                 }).then(response=>{
                   var nickname = response.data.choices[0].text;
                   if(nickname.replace(" ", "")=="" || nickname.length>32){
-                    return client.database.addTokens(message.author.id, 150).then(user=>{
+                    return client.database.takeTokens(message.author.id, -150).then(user=>{
                       responsemessage.inlineReply("The AI returned nothing or the nickname was too long, please try again.");
                     });
                   }
