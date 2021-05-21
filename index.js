@@ -54,12 +54,12 @@ app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
-  client.database.db.serialize(function(){
-    client.database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", function(data){
+  database.db.serialize(function(){
+    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", function(data){
       if(!data){
         return;
       }
-      client.database.validatePurchase(args[0], data.userid)
+      database.validatePurchase(args[0], data.userid)
       .then(purchasedata=>{
         manager.broadcastEval(`
           (async () => {
