@@ -69,8 +69,7 @@ app.get('/callback', (req, res) => {
           })();
           `, 0)
           .then(theuser=>{
-          }).catch(err=>{
-          });
+          }).catch(console.error);
         })
         .catch(err=>{
         });
