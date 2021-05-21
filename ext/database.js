@@ -140,6 +140,20 @@ function validatePurchase(sessionkey, userid){
 	});
 }
 
+function getPurchase(sessionkey){
+	return new Promise((resolve, reject)=>{
+		db.serialize(function(){
+			db.get("SELECT * FROM purchases WHERE token = $1", [sessionkey], function(err, data){
+				if(!data){
+					return reject({code: 1});
+				}
+				return resolve(data);
+			});
+		});
+	});
+}
+
+
 function addTokens(userid, tokens) {
 	return new Promise((resolve, reject) => {
 		var botlib = require('./lib');
@@ -233,5 +247,6 @@ module.exports = {
 	getMessages: getMessages,
 	addMessage: addMessage,
 	validatePurchase: validatePurchase,
-	moreTokens: moreTokens
+	moreTokens: moreTokens,
+	getPurchase: getPurchase
 };

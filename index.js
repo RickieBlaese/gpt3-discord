@@ -55,31 +55,28 @@ app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
-  database.db.serialize(function(){
-    let buff = new Buffer.from(req.query.session_id);
-    let sessionid = buff.toString('base64');
-    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [req.query.session_id], function(data){
-      if(!data){
-        return;
-      }
-      database.validatePurchase(sessionid, data.userid)
+  database.getPurchase(req.query.session_id).then(purchase=>{
+    database.validatePurchase(sessionid, purchase.userid)
       .then(purchasedata=>{
         manager.broadcastEval(`
           (async () => {
-            let theguy = this.users.fetch('${data.userid}');
+            let theguy = this.users.fetch('${purchase.userid}');
             if(theguy){
               return theguy;
             }
           })();
           `, 0)
           .then(theuser=>{
-            theuser.send(`Thanks for supporting us! ${botlib.thousands(data.amount)} tokens have been added to your account.`);
+            theuser.send(`Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.`);
           }).catch(err=>{
           });
+        })
+        .catch(err=>{
+        });
       })
       .catch(err=>{
-      });
 
+      });
     });
   });
 });
