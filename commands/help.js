@@ -8,6 +8,9 @@ module.exports = {
       const Discord = require(`discord.js`);
       var end = `To get more detailed help about a command, run \`${client.config.bot.prefix}help [command]\`\n`;
   		if(args.length>0){
+				if(args[0].startsWith(client.config.bot.prefix)){
+					args[0] = args[0].substring(client.config.bot.prefix.length);
+				}
   			if(client.commands.has(args[0])){
   				var command = client.commands.get(args[0]);
 					if(user.perms >= command.perms || (!command.perms)){
