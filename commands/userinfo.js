@@ -15,7 +15,7 @@ module.exports = {
     }
     client.database.getUser(user.id).then(botuser=>{
       const infoembed = new Discord.MessageEmbed()
-      .setTitle(`${client.user.username} info`)
+      .setTitle(`${user.username} info`)
       .addFields(
         { name: 'ID', value: botuser.id, inline: true },
         { name: 'Permission level', value: botuser.perms, inline: true },
@@ -23,7 +23,8 @@ module.exports = {
         { name: 'Total tokens used', value: client.lib.thousands(botuser.tokens), inline: true },
         { name: 'Banned', value: `${botuser.banned ? "Yes" : "No"}`, inline: true },
         { name: 'Accepted the EULA', value: `${botuser.eula ? "Yes" : "No"}`, inline: true },
-      ).setColor(`#${client.config.brandcolour}`);
+      ).setColor(`#${client.config.brandcolour}`)
+      .setThumbnail(user.displayAvatarURL());
       message.inlineReply(infoembed);
     });
 	},
