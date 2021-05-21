@@ -45,7 +45,8 @@ module.exports = {
                   frequencyPenalty: 0.7,
                   bestOf: 2,
                   stream: false,
-                  stop: ['\n']
+                  stop: ['\n'],
+									user: message.author.id
                 }).then(response=>{
                   var nickname = response.data.choices[0].text;
                   if(nickname.replace(" ", "")=="" || nickname.length>32){
