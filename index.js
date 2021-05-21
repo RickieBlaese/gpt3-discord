@@ -56,7 +56,9 @@ app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
   database.db.serialize(function(){
-    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [req.query.session_id], function(data){
+    let buff = new Buffer.from(req.query.session_id);
+    let sessionid = buff.toString('base64');
+    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [sessionid], function(data){
       if(!data){
         return;
       }
