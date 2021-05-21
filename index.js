@@ -56,6 +56,7 @@ app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
   database.getPurchase(req.query.session_id).then(purchase=>{
+    console.log(purchase);
     database.validatePurchase(sessionid, purchase.userid)
       .then(purchasedata=>{
         manager.broadcastEval(`
@@ -75,7 +76,7 @@ app.get('/callback', (req, res) => {
         });
       })
       .catch(err=>{
-
+        console.error(err);
       });
 });
 app.get('/added', (req, res) => {
