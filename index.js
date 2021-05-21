@@ -70,8 +70,10 @@ app.get('/callback', (req, res) => {
           })();
           `, 0)
           .then(theuser=>{
-            theuser.send(`Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.`);
+            theuser.send(`Thanks for supporting us! ${botlib.thousands(purchasedata.amount)} tokens have been added to your account.`)
+            .catch(console.err);
           }).catch(err=>{
+            console.error(err);
           });
         })
         .catch(err=>{
