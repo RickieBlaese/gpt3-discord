@@ -28,7 +28,7 @@ module.exports = {
       }
       database.getTokens(message.author.id).then(remainingtokens=>{
         database.getMessages(message.author.id).then(messages=>{
-          var toask = `This user is talking on Discord are having a conversation. Only talk about video games, cooking and art.\n\n`;
+          var toask = `This user is talking to a bot on Discord. Only talk about video games, cooking and art.\n\n`;
           messages.reverse();
           for(const message of messages){
             toask = toask + `User: ${message.question}\nPolite Response:${message.answer}\n`
