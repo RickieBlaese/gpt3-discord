@@ -77,8 +77,6 @@ app.get('/callback', (req, res) => {
       .catch(err=>{
 
       });
-    });
-  });
 });
 app.get('/added', (req, res) => {
   if(req.query.guild_id){
