@@ -56,6 +56,7 @@ app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
 app.get('/callback', (req, res) => {
   res.render('callback');
+  console.log(req.query.session_id);
   database.getPurchase(req.query.session_id).then(purchase=>{
     sessionid = new Buffer.from(req.query.session_id);
 		sessionid = sessionid.toString('base64');
@@ -77,8 +78,7 @@ app.get('/callback', (req, res) => {
         .catch(err=>{
         });
       })
-      .catch(err=>{
-      });
+      .catch(console.error);
 });
 app.get('/added', (req, res) => {
   if(req.query.guild_id){
