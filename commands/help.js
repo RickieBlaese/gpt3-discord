@@ -16,7 +16,7 @@ module.exports = {
   				var command = client.commands.get(args[0]);
 					if(user.perms >= command.perms || (!command.perms)){
 						// TODO: add more details
-						var cooldown="no cooldown"
+						var cooldown="No cooldown"
 						if(command.cooldown>=1){
 							cooldown=client.lib.parsetime(command.cooldown*1000)
 						}
