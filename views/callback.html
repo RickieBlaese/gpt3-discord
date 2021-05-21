@@ -2,7 +2,6 @@
  <head>
    <title>GPT-3 Discord</title>
    <base target="_blank">
-   <script async src="https://arc.io/widget.min.js#x8X5VoFf"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/2.0.2/anime.min.js"></script>
    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
    <style>
@@ -24,7 +23,7 @@
      <script type="text/javascript">
        const urlParams = new URLSearchParams(window.location.search);
        const sessionid = urlParams.get('session_id');
-       $(".funnycode").html(btoa(sessionid))
+       $("#funnycode").html(btoa(sessionid))
      </script>
  </body>
 </html>
