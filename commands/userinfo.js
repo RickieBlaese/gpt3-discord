@@ -23,7 +23,7 @@ module.exports = {
         { name: 'Total tokens used', value: client.lib.thousands(botuser.tokens), inline: true },
         { name: 'Banned', value: `${botuser.banned ? "Yes" : "No"}`, inline: true },
         { name: 'Accepted the EULA', value: `${botuser.eula ? "Yes" : "No"}`, inline: true },
-      ).setColor(`#${client.config.brandcolour}`).setFooter(`By rosee#0001 | Owned by ${owner.username}#${owner.discriminator}`);
+      ).setColor(`#${client.config.brandcolour}`);
       message.inlineReply(infoembed);
     });
 	},
