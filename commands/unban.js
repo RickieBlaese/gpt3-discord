@@ -2,6 +2,7 @@ module.exports = {
 	name: 'unban',
   perms: 2,
 	description: 'unban users',
+	usage: '<user>',
   indms: true,
 	execute(client, message, args) {
 		const Discord = client.Discord;

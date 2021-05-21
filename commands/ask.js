@@ -2,6 +2,7 @@ module.exports = {
 	name: 'ask',
   cooldown: 5,
 	description: 'Ask the bot something',
+	usage: '<message>',
 	execute(client, message, args) {
 		const Discord = client.Discord;
     message.channel.startTyping();

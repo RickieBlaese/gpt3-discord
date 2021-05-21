@@ -2,6 +2,7 @@ module.exports = {
 	name: 'help',
   cooldown: 0,
 	description: 'See this message',
+	usage: '[command]',
   indms: true,
 	execute(client, message, args) {
     client.database.getUser(message.author.id).then(user=>{
@@ -22,6 +23,7 @@ module.exports = {
 						message.channel.send(`\`${client.config.bot.prefix}${command.name}\`:
 >>> Description: ${command.description}
 Cooldown: ${cooldown}
+Usage: \`${command.name}${command.usage ? ` ${command.usage}`}\`
 Works in DMs: ${command.indms ? "Yes" : "No"}
 Required permission level: ${command.perms || "0"}`)
 							return;
