@@ -52,7 +52,34 @@ app.use(session({
 }))
 app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
-app.get('/callback', staticpage("callback"));
+app.get('/callback', (req, res) => {
+  res.render('callback');
+  client.database.db.serialize(function(){
+    client.database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", function(data){
+      if(!data){
+        return;
+      }
+      client.database.validatePurchase(args[0], data.userid)
+      .then(purchasedata=>{
+        manager.broadcastEval(`
+          (async () => {
+            let theguy = this.users.fetch('${data.userid}');
+            if(theguy){
+              return theguy;
+            }
+          })();
+          `, 0)
+          .then(theuser=>{
+            theuser.send(`Thanks for supporting us! ${client.lib.thousands(data.amount)} tokens have been added to your account.`);
+          }).catch(err=>{
+          });
+      })
+      .catch(err=>{
+      });
+
+    });
+  });
+});
 app.get('/added', (req, res) => {
   if(req.query.guild_id){
     manager.broadcastEval(`
