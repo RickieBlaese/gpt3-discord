@@ -58,11 +58,11 @@ app.get('/callback', (req, res) => {
   database.db.serialize(function(){
     let buff = new Buffer.from(req.query.session_id);
     let sessionid = buff.toString('base64');
-    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [sessionid], function(data){
+    database.db.get("SELECT * FROM purchases WHERE token = $1 AND done = 0", [req.query.session_id], function(data){
       if(!data){
         return;
       }
-      database.validatePurchase(args[0], data.userid)
+      database.validatePurchase(sessionid, data.userid)
       .then(purchasedata=>{
         manager.broadcastEval(`
           (async () => {
