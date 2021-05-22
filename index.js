@@ -50,7 +50,7 @@ app.use(session({
   resave: false,
   saveUninitialized: true,
   store: new SQLiteStore,
-  cookie: { secure: true, cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 * 4 } } // 4 week long cookie
+  cookie: { secure: false, cookie: { maxAge: 7 * 24 * 60 * 60 * 1000 * 4 } } // 4 week long cookie
 }))
 app.use('/static', express.static('static'));
 app.get('/', staticpage("index"));
@@ -97,7 +97,6 @@ app.get('/added', (req, res) => {
 app.get('/checkout', staticpage("checkout"));
 
 app.get('/guild/added', (req, res) => {
-  console.log(req.session);
   if(req.session.ref){
     database.db.serialize(function(){
       database.db.get("SELECT * FROM ref WHERE code = $1;", [req.session.ref], function(err, data){
