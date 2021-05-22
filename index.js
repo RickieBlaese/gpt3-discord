@@ -144,13 +144,13 @@ app.get('/guild/added', (req, res) => {
                     (async () => {
                       let theguy = await this.users.fetch('${theuser.user.id}');
                       try{
-                        await theguy.send("Your referral code was used! I was invited to ${theuser.guild.name}! Your account has been given 100 tokens.\nTotal uses: ${botlib.thousands(data.uses+1)}");
+                        await theguy.send("Your referral code was used! I was invited to ${theuser.guild.name}! Your account has been given 250 tokens.\nTotal uses: ${botlib.thousands(data.uses+1)}");
                       }catch(e){
 
                       }
                     })();
                     `, 0);
-                  database.addTokens(theuser.user.id, 100);
+                  database.addTokens(theuser.user.id, 250);
                 }
               });
           });

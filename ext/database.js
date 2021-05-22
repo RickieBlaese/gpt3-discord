@@ -153,6 +153,25 @@ function getPurchase(sessionkey){
 	});
 }
 
+function getRef(userid){
+	return new Promise((resolve, reject)=>{
+		db.serialize(function(){
+			db.get("SELECT * FROM ref WHERE userid = $1", [userid], function(err, data){
+				if(!data){
+					var token = require('crypto').randomBytes(7).toString('hex');
+					db.run("INSERT INTO ref(userid, code, uses) VALUES($1, $2, 0)", [userid, token], function(err){
+						if(err){
+							return reject(err);
+						}
+						getRef(userid).then(resolve).catch(reject);
+					});
+					return;
+				}
+				return resolve(data);
+			});
+		});
+	});
+}
 
 function addTokens(userid, tokens) {
 	return new Promise((resolve, reject) => {
@@ -253,5 +272,6 @@ module.exports = {
 	addMessage: addMessage,
 	validatePurchase: validatePurchase,
 	moreTokens: moreTokens,
-	getPurchase: getPurchase
+	getPurchase: getPurchase,
+	getRef: getRef
 };
