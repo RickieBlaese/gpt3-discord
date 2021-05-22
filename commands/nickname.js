@@ -4,7 +4,7 @@ const openai = new OpenAI(config.openai.token);
 module.exports = {
 	name: 'nickname',
   cooldown: 20,
-	description: 'Get the bot to generate a new nickname for you!',
+	description: 'Get the bot to generate a new nickname for you',
 	execute(client, message, args) {
 		const Discord = client.Discord;
     if(!message.member.hasPermission('CHANGE_NICKNAME')){
