@@ -49,6 +49,9 @@ client.on('message', message => {
 				return;
 			}
 		}
+		if(client.config.beta && user.perms==0){
+			return;
+		}
 		if(user.banned){
 			return;
 		}
