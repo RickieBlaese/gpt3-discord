@@ -79,7 +79,7 @@ app.get('/added', (req, res) => {
   if(req.query.guild_id){
     manager.broadcastEval(`
       (async () => {
-        let theguy = this.guilds.fetch('${req.query.guild_id}');
+        let theguy = await this.guilds.fetch('${req.query.guild_id}');
         if(theguy){
           return theguy;
         }
@@ -125,7 +125,7 @@ app.get('/guild/added', (req, res) => {
     //   });
     // });
   }
-  res.redirect(`https://honeybot.xyz/added?guild_id=${req.query.guild_id}`);
+  res.redirect(`/added?guild_id=${req.query.guild_id}`);
 });
 
 app.get('/invite', (req, res) => {
@@ -146,7 +146,7 @@ app.get('/:id', (req, res) => {
         return res.render('404');
       }
       req.session.ref = ref;
-      return res.redirect("https://honeybot.xyz/invite");
+      return res.redirect("/invite");
     });
   });
 });
