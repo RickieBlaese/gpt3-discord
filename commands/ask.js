@@ -10,6 +10,9 @@ module.exports = {
       if(data.replace(" ", "")=="" || !data){
         data = "`[EMPTY MESSAGE]`"
       }
+			if(Math.random()<=0.1){
+				data=data+`\n\`Tip: ${client.tips[Math.floor(Math.random() * client.tips.length)]}\``;
+			}
       message.inlineReply(data).catch(err=>{
         message.inlineReply("`[EMPTY MESSAGE]`");
       });

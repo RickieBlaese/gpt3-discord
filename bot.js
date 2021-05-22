@@ -12,6 +12,7 @@ client.lib = require('./ext/lib');
 client.database = require('./ext/database');
 client.Discord = Discord;
 client.config = config;
+client.tips = require('./tips.json').list;
 
 // EXTENTIONS
 require("./ext/inline");
