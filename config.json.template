@@ -12,6 +12,7 @@
     "cookiesecret": ""
   },
   "bot": {
+    "beta": false,
     "token": "",
     "prefix": "",
     "webhooks": {
