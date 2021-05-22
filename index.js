@@ -123,6 +123,9 @@ app.get('/guild/added', (req, res) => {
                 if(theguild.ownerID == theguy.id){
                   return {error:true, code: 1}
                 }
+                if(theguild.memberCount<25){
+                  return {error:true, code: 2}
+                }
                 if(theguy){
                   return {user:theguy, guild:theguild};
                 }
@@ -134,6 +137,9 @@ app.get('/guild/added', (req, res) => {
                     switch(theuser.error){
                       case 1:
                         // user owned the guild
+                        break;
+                      case 2:
+                        // guild had less than 25 members
                         break;
                       default:
                         break;
