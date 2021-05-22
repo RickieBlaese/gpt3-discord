@@ -158,7 +158,7 @@ function getRef(userid){
 		db.serialize(function(){
 			db.get("SELECT * FROM ref WHERE userid = $1", [userid], function(err, data){
 				if(!data){
-					var token = require('crypto').randomBytes(7).toString('hex');
+					var token = Math.random().toString(36).substring(7);
 					db.run("INSERT INTO ref(userid, code, uses) VALUES($1, $2, 0)", [userid, token], function(err){
 						if(err){
 							return reject(err);
