@@ -97,35 +97,70 @@ app.get('/added', (req, res) => {
 app.get('/checkout', staticpage("checkout"));
 
 app.get('/guild/added', (req, res) => {
-  if(req.session.ref){
-    // database.db.serialize(function(){
-    //   database.db.get("SELECT * FROM ref WHERE code = $1;", [req.session.ref], function(err, data){
-    //     if(!data){
-    //
-    //     }
-    //     database.db.get("SELECT * FROM servers WHERE serverid = $1", [req.query.guild_id], function(err, serverdata){
-    //       if(serverdata){
-    //         return;
-    //       }
-    //       manager.broadcastEval(`
-    //         (async () => {
-    //           let theguy = this.users.fetch('${"hi"}');
-    //           if(theguy){
-    //             return theguy;
-    //           }
-    //         })();
-    //         `, 0)
-    //         .then(theuser=>{
-    //           if(theuser){
-    //             console.log(theuser);
-    //           }
-    //         });
-    //     });
-    //     res.session.ref = undefined;
-    //   });
-    // });
+  if(1){
+    database.db.serialize(function(){
+      req.session.ref = 'YltGw';
+      database.db.get("SELECT * FROM ref WHERE code = $1;", [req.session.ref], function(err, data){
+        req.session.ref = undefined;
+        res.redirect(`/added?guild_id=${req.query.guild_id}`);
+        if(!data){
+          return
+        }
+        database.db.get("SELECT * FROM servers WHERE serverid = $1", [req.query.guild_id], function(err, serverdata){
+          if(serverdata){
+            return
+          }
+          database.db.run("INSERT INTO servers(serverid, time) VALUES($1, $2)", [req.query.guild_id, new Date().getTime()], function(err){
+            if(err){
+              return console.error(err);
+            }
+            database.db.run("UPDATE ref SET uses = uses + 1 WHERE id = $1", [data.id], function(err){
+
+            });
+            manager.broadcastEval(`
+              (async () => {
+                let theguild = await this.guilds.fetch('${req.query.guild_id}');
+                let theguy = await this.users.fetch('${data.userid}');
+                if(theguild.ownerID == theguy.id){
+                  return {error:true, code: 1}
+                }
+                if(theguy){
+                  return {user:theguy, guild:theguild};
+                }
+              })();
+              `, 0)
+              .then(theuser=>{
+                if(theuser){
+                  if(theuser.error){
+                    switch(theuser.error){
+                      case 1:
+                        // user owned the guild
+                        break;
+                      default:
+                        break;
+                    }
+                    return;
+                  }
+                  manager.broadcastEval(`
+                    (async () => {
+                      let theguy = await this.users.fetch('${theuser.user.id}');
+                      try{
+                        await theguy.send("Your referral code was used! I was invited to ${theuser.guild.name}! Your account has been given 100 tokens.\nTotal uses: ${botlib.thousands(data.uses+1)}");
+                      }catch(e){
+
+                      }
+                    })();
+                    `, 0);
+                  database.addTokens(theuser.user.id, 100);
+                }
+              });
+          });
+        });
+      });
+    });
+  }else{
+    res.redirect(`/added?guild_id=${req.query.guild_id}`);
   }
-  res.redirect(`/added?guild_id=${req.query.guild_id}`);
 });
 
 app.get('/invite', (req, res) => {
