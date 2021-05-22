@@ -1,6 +1,6 @@
 module.exports = {
 	name: 'ask',
-  cooldown: 5,
+  cooldown: 4,
 	description: 'Ask the bot something',
 	usage: '<message>',
 	execute(client, message, args) {
