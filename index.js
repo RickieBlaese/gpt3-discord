@@ -97,9 +97,8 @@ app.get('/added', (req, res) => {
 app.get('/checkout', staticpage("checkout"));
 
 app.get('/guild/added', (req, res) => {
-  if(1){
+  if(req.session.ref){
     database.db.serialize(function(){
-      req.session.ref = 'YltGw';
       database.db.get("SELECT * FROM ref WHERE code = $1;", [req.session.ref], function(err, data){
         req.session.ref = undefined;
         res.redirect(`/added?guild_id=${req.query.guild_id}`);
