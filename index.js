@@ -150,7 +150,7 @@ app.get('/guild/added', (req, res) => {
                     (async () => {
                       let theguy = await this.users.fetch('${theuser.user.id}');
                       try{
-                        await theguy.send("Your referral code was used! I was invited to ${theuser.guild.name}! Your account has been given 250 tokens.\nTotal uses: ${botlib.thousands(data.uses+1)}");
+                        await theguy.send("Your referral code was used! I was invited to ${theuser.guild.name}! Your account has been given 250 tokens. Run \`${config.bot.prefix}ref\` to find how many uses your code has.");
                       }catch(e){
 
                       }
@@ -164,7 +164,13 @@ app.get('/guild/added', (req, res) => {
       });
     });
   }else{
-    res.redirect(`/added?guild_id=${req.query.guild_id}`);
+    database.db.get("SELECT * FROM servers WHERE serverid = $1", [req.query.guild_id], function(err, serverdata){
+      if(!serverdata){
+        database.db.run("INSERT INTO servers(serverid, time) VALUES($1, $2)", [req.query.guild_id, new Date().getTime()], function(err){
+        });
+      }
+      res.redirect(`/added?guild_id=${req.query.guild_id}`);
+    });
   }
 });
 
