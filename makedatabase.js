@@ -5,7 +5,7 @@ db.serialize(function(){
     console.log(err);
     console.log("done (purchases)");
   });
-  db.run("CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, userid TEXT, perms int DEFAULT 0, credits int DEFAULT 0, premium int DEFAULT 0, tokens int DEFAULT 0, tokensgiventime int DEFAULT 0, tokensleft int DEFAULT 0, banned int DEFAULT 0, eula int DEFAULT 0)", function(err){
+  db.run("CREATE TABLE users(id INTEGER PRIMARY KEY AUTOINCREMENT, userid TEXT, perms int DEFAULT 0, credits int DEFAULT 0, premium int DEFAULT 0, tokens int DEFAULT 0, tokensgiventime int DEFAULT 0, tokensleft int DEFAULT 0, banned int DEFAULT 0, eula int DEFAULT 0, stripe TEXT DEFUALT NULL)", function(err){
     console.log(err);
     console.log("done (users)");
   });

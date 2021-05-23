@@ -69,40 +69,68 @@ function addMessage(q, a, userid){
 	});
 }
 
+function getCustomer(userid){
+	return new Promise((resolve, reject)=>{
+		getUser(userid).then(user=>{
+			if(user.stripe){
+				return resolve(user.stripe);
+			}
+			stripe.customers.create({
+				name: `User ${user.id}`,
+				description: `Discord ID: ${userid}`
+			}).then(customer=>{
+				db.run("UPDATE users SET stripe = $1 WHERE userid = $2", [customer.id, userid], function(err){
+					if(err){
+						return reject(err);
+					}
+					return resolve(customer.id);
+				})
+			})
+		})
+	});
+}
+
 function moreTokens(amount, userid){
 	return new Promise((resolve, reject)=>{
 		var botlib = require('./lib');
-		stripe.checkout.sessions.create({
-	    success_url: 'https://honeybot.xyz/callback?session_id={CHECKOUT_SESSION_ID}',
-	    cancel_url: 'https://honeybot.xyz',
-	    payment_method_types: ['card'],
-	    line_items: [
-				{
-					price_data: {
-          	currency: 'gbp',
-          	product_data: {
-            	name: `${botlib.thousands(amount)} tokens`,
-          	},
-          	unit_amount: Math.ceil((config.tokenprice*100)*amount),
-        	},
-        	quantity: 1,
-      },
-	    ],
-	    mode: 'payment',
-	    allow_promotion_codes: true,
-	  })
-	  .then(session => {
-			getUser(userid).then(user=>{
-				db.serialize(function(){
-					db.run("INSERT INTO purchases(token, userid, amount) VALUES($1, $2, $3)", [session.id, userid, amount], function(err){
-						if(err){
-							return reject(err);
-						}
-						resolve(session);
-					})
-				});
-			})
-	  });
+		getUser(userid).then(user=>{
+			var options = {
+				success_url: 'https://honeybot.xyz/callback?session_id={CHECKOUT_SESSION_ID}',
+				cancel_url: 'https://honeybot.xyz',
+				payment_method_types: ['card'],
+				line_items: [
+					{
+						price_data: {
+							currency: 'gbp',
+							product_data: {
+								name: `${botlib.thousands(amount)} tokens`,
+							},
+							unit_amount: Math.ceil((config.tokenprice*100)*amount),
+						},
+						quantity: 1,
+					},
+				],
+				mode: 'payment',
+				allow_promotion_codes: true
+			}
+			getCustomer(userid).then(customer=>{
+				options.customer = customer;
+				stripe.checkout.sessions.create(options)
+				.then(session => {
+					getUser(userid).then(user=>{
+						db.serialize(function(){
+							db.run("INSERT INTO purchases(token, userid, amount) VALUES($1, $2, $3)", [session.id, userid, amount], function(err){
+								if(err){
+									return reject(err);
+								}
+								resolve(session);
+
+							});
+						});
+					});
+			  });
+			});
+		});
 	});
 }
 
@@ -158,7 +186,7 @@ function getRef(userid){
 		db.serialize(function(){
 			db.get("SELECT * FROM ref WHERE userid = $1", [userid], function(err, data){
 				if(!data){
-					var token = Math.random().toString(36).substring(7);
+					var token = Math.random().toString(36).substring(7)
 					db.run("INSERT INTO ref(userid, code, uses) VALUES($1, $2, 0)", [userid, token], function(err){
 						if(err){
 							return reject(err);
