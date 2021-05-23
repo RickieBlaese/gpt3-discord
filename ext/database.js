@@ -96,7 +96,7 @@ function moreTokens(amount, userid){
 			var options = {
 				success_url: 'https://honeybot.xyz/callback?session_id={CHECKOUT_SESSION_ID}',
 				cancel_url: 'https://honeybot.xyz',
-				payment_method_types: ['card'],
+				payment_method_types: ['card', 'alipay'],
 				line_items: [
 					{
 						price_data: {
