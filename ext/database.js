@@ -76,7 +76,7 @@ function getCustomer(userid){
 				return resolve(user.stripe);
 			}
 			stripe.customers.create({
-				description: `UserID: ${user.id} | Discord ID: ${userid}`
+				description: `User ID: ${user.id} | Discord ID: ${userid}`
 			}).then(customer=>{
 				db.run("UPDATE users SET stripe = $1 WHERE userid = $2", [customer.id, userid], function(err){
 					if(err){
