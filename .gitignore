@@ -6,3 +6,4 @@ errors/logs/*
 data
 editdatabase.js
 sessions
+test/*
