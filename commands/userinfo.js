@@ -15,7 +15,7 @@ module.exports = {
     }
     client.database.getUser(user.id).then(botuser=>{
       const infoembed = new Discord.MessageEmbed()
-      .setTitle(`${user.username} info`)
+      .setTitle(`${user.username}'s account info`)
       .addFields(
         { name: 'ID', value: botuser.id, inline: true },
         { name: 'Permission level', value: botuser.perms, inline: true },
