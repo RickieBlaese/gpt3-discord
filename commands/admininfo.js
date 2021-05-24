@@ -11,5 +11,5 @@ module.exports = {
 > Server count: ${client.lib.thousands(results.reduce((acc, guildCount) => acc + guildCount, 0))}
 > Shard count: ${client.lib.thousands(client.shard.ids.length)}`);
     	});
-  };
+  },
 };
