@@ -13,7 +13,11 @@ client.database = require('./ext/database');
 client.Discord = Discord;
 client.config = config;
 client.tips = require('./tips.json').list;
+const webhooks = {};
 
+client.fetchWebhook(config.bot.webhooks.servers.id, config.bot.webhooks.servers.secret).then(webhook=>{
+	webhooks.servers = webhook;
+});
 // EXTENTIONS
 require("./ext/inline");
 
@@ -34,6 +38,38 @@ client.once('ready', () => {
 	client.fetchApplication().then((info)=>{
 		client.application = info;
 	});
+});
+
+client.on('guildCreate', guild => {
+	client.shard.fetchClientValues('guilds.cache.size')
+		.then(results=>{
+			const infoembed = new Discord.MessageEmbed()
+			.setTitle(`Added to ${guild.name}`)
+			.addFields(
+				{ name: 'Server name', value: guild.name, inline: true },
+				{ name: 'Server ID', value: guild.id, inline: true },
+				{ name: 'Member count', value: client.lib.thousands(guild.memberCount), inline: true },
+			).setColor(`#57F287`)
+			.setFooter(`Total servers: ${client.lib.thousands(results.reduce((acc, guildCount) => acc + guildCount, 0))}`)
+			.setThumbnail(guild.iconURL());
+			webhooks.servers.send(infoembed);
+		});
+});
+
+client.on('guildDelete', guild => {
+	client.shard.fetchClientValues('guilds.cache.size')
+		.then(results=>{
+			const infoembed = new Discord.MessageEmbed()
+			.setTitle(`Left ${guild.name}`)
+			.addFields(
+				{ name: 'Server name', value: guild.name, inline: true },
+				{ name: 'Server ID', value: guild.id, inline: true },
+				{ name: 'Member count', value: client.lib.thousands(guild.memberCount), inline: true },
+			).setColor(`#ED4245`)
+			.setFooter(`Total servers: ${client.lib.thousands(results.reduce((acc, guildCount) => acc + guildCount, 0))}`)
+			.setThumbnail(guild.iconURL());
+			webhooks.servers.send(infoembed);
+		});
 });
 
 client.on('message', message => {

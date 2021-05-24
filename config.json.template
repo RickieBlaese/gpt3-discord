@@ -23,6 +23,10 @@
       "tokens": {
         "id": "",
         "secret": ""
+      },
+      "servers": {
+        "id": "",
+        "secret": ""
       }
     }
   },
