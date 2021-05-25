@@ -9,6 +9,9 @@ module.exports = {
     var user = message.author;
     if(args.length==1){
       user = client.lib.getUserFromMention(args[0], client);
+			if(!user){
+	      user=client.users.cache.get(args[0]);
+	    }
       if(!user){
         return message.inlineReply("User not found, try mentioning them or using their ID");
       }
